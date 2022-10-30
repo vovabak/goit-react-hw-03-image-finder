@@ -12,9 +12,7 @@ export const App = () => {
         color: '#010101'
       }}
     >
-      <Searchbar></Searchbar>
-      React homework template
-      
+      <Searchbar>hi!!</Searchbar>
     </div>
   );
 };
