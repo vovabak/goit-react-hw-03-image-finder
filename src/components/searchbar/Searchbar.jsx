@@ -1,3 +1,3 @@
-export class Searchbar = () => {
+export const Searchbar = () => {
     console.log('hi');
 }

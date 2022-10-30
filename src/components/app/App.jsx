@@ -1,4 +1,9 @@
-import {Searchbar} from '../searchbar/Searchbar'
+import { Searchbar } from '../searchbar/Searchbar';
+import { ImageGallery } from 'components/imageGallery/ImageGallery';
+import { Loader } from '../loader/Loader';
+import { Button } from '../button/Button';
+import { Modal } from '../modal/Modal';
+
 
 export const App = () => {
   return (
@@ -13,6 +18,10 @@ export const App = () => {
       }}
     >
       <Searchbar>hi!!</Searchbar>
+      <Loader>Loader hi</Loader>
+      <ImageGallery>Gallary Hi</ImageGallery>
+      <Button>Button hi</Button>
+      <Modal></Modal>
     </div>
   );
 };
