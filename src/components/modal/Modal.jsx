@@ -1,3 +1,11 @@
+import { Overlay, ModalWindow } from './Modal.styled';
+
 export const Modal = () => {
-    console.log('Modal hi');
+    return (
+        <Overlay>
+            <ModalWindow>
+                <img src="" alt="" />
+            </ModalWindow>
+        </Overlay>
+    )
 }

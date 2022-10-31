@@ -1,3 +1,3 @@
 export const Loader = () => {
-    console.log('Loader hi');
+    return <span>L o a d i n g ...</span>
 }

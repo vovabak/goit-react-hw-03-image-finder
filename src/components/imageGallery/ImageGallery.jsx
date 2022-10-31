@@ -1,3 +1,10 @@
+import { ImageGalleryItem } from '../imageGalleryItem/ImageGalleryItem'
+import {GalleryList} from './ImageGallery.styled'
+
 export const ImageGallery = () => {
-    console.log('again hi');
+    return (
+        <GalleryList>
+            <ImageGalleryItem/>
+        </GalleryList>
+    )
 }
