@@ -3,13 +3,29 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { IconContext } from "react-icons";
 
 
-export const Searchbar = () => {
+export const Searchbar = ({onQuerry}) => {
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const querry = e.currentTarget.searchQuerry.value;
+
+        if (querry.trim() === '') return;
+        
+        onQuerry(querry)
+
+        e.currentTarget.reset()
+    }
+
     return (
         <SearchbarHeader>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <SearchFormButton type="submit">
                     <ButtonLabel>Search</ButtonLabel>
-                    <IconContext.Provider value={{size: '100%', style: { verticalAlign: 'middle' }}}>
+                    <IconContext.Provider
+                        value={{
+                                size: '100%',
+                                style: { verticalAlign: 'middle' }
+                            }}>
                         <AiOutlineSearch />
                     </IconContext.Provider>
                 </SearchFormButton>
@@ -17,7 +33,7 @@ export const Searchbar = () => {
                     type="text"
                     name="searchQuerry"
                     autocomplete="off"
-                    autofocus
+                    autoFocus
                     placeholder="Search images and photos" />
             </Form>                       
         </SearchbarHeader>
