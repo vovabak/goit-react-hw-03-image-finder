@@ -1,53 +1,82 @@
 import { Component } from 'react';
 import { Searchbar } from '../searchbar/Searchbar';
 import { ImageGallery } from 'components/imageGallery/ImageGallery';
-// import { Loader } from '../loader/Loader';
+import { Loader } from '../loader/Loader';
 import { Button } from '../button/Button';
-// import { Modal } from '../modal/Modal';
 import { getImages } from '../../api/Api';
+import { Modal } from '../modal/Modal';
 import { Container } from './App.styled';
 
-// let page = 1;
+
 
 export class App extends Component {
 
   state = {
-    gallery: [],
+    gallery: [],    
     querry: '',
-    isLoading: false,
-    isLoaded: false,
+    page: 1,    
+    status: 'idle',
+    activeId: null,
+    showModal: false,
   }
+  
 
   async componentDidUpdate(_, prevState) {
-
-    if (!prevState.isLoading) {
+    
+    if (this.state.showModal && this.state.activeId) return
+    
+    if (prevState.querry !== this.state.querry) {
+      this.setState({ gallery: [], });
+    }
+    
+    if (prevState.gallery === this.state.gallery && !this.state.activeId) {
+        
       try {
-        const response = await getImages(this.state.querry, 1)
-        this.setState({ gallery: response.data.hits, isLoaded: true })
+        const response = await getImages(this.state.querry, this.state.page)
+        
+        this.setState(prevState => {
+          return { gallery: [...prevState.gallery, ...response.data.hits], status: 'resolved' }
+        });
       } catch (error) {
-        console.error(error);
-      } finally {
-        this.setState({isLoading: false})
+        this.setState({ status: 'rejected' });
       }
     }
   }
 
-  handleQuerry = (querry) => {
-    this.setState({ querry, isLoading: true });    
+  handleSubmit = (querry) => {
+    this.setState({ querry, page: 1, activeId: null, status: 'pending', });
   }
 
-  render()
-  {
+  handleLoadMore = () => {
+    this.setState(prevState => { return { page: prevState.page += 1, activeId: null, status: 'pending' }});
+  }
+
+  toggleModal = (id) => {    
+    this.setState({ showModal: !this.state.showModal, activeId: id?? this.state.activeId }) 
+  }
+
+  render() {
+
+    const { status, showModal } = this.state;
+        
     return (
       <Container>
-        <Searchbar
-          onQuerry={this.handleQuerry} />
-        {/* <Loader/> */}
-        <ImageGallery
-            gallery={this.state.gallery} />        
-        {this.state.isLoaded && <Button />
-        }
-        {/* <Modal/> */}
+        <Searchbar          
+          onSubmit={this.handleSubmit}
+          querry={this.state.querry}
+        />
+        <ImageGallery            
+          gallery={this.state.gallery}
+          toggleModal={this.toggleModal}>
+          {status === 'pending' && <Loader />}
+        </ImageGallery>       
+        {status === 'resolved' &&
+          <Button
+            onLoadMore={this.handleLoadMore} />}
+        {showModal &&
+          <Modal
+            image={this.state.gallery.filter(galleryItem => galleryItem.id === this.state.activeId)}            
+            toggleModal={this.toggleModal} />}
       </Container>
     )
   }
