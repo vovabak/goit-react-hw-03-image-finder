@@ -1,4 +1,4 @@
-import { ImageGalleryItem } from '../imageGalleryItem/ImageGalleryItem';
+import { ImageGalleryItem } from '../imageGalleryItem';
 import { GalleryList } from './ImageGallery.styled';
 
 

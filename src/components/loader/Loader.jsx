@@ -1,3 +1,11 @@
-export const Loader = () => {
-   return < span > L o a d i n g ...</span >
+import { ThreeDots } from 'react-loader-spinner';
+
+export const Loader = ({status}) => {
+   return <span>
+            <ThreeDots
+               color="#3f51b5"
+               wrapperStyle={{ justifyContent: 'center' }}
+               visible={status === 'pending'}
+            />
+         </span >
 }

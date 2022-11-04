@@ -1,7 +1,9 @@
-import { SearchbarHeader, Form, SearchFormButton, ButtonLabel, Input } from './Searchbar.styled';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { IconContext } from "react-icons";
 import { Component } from 'react';
+import { toast } from 'react-toastify';
+import { IconContext } from "react-icons";
+import { SearchbarHeader, Form, SearchFormButton, ButtonLabel, Input } from './Searchbar.styled';
+
 
 
 export class Searchbar extends Component {
@@ -20,13 +22,17 @@ export class Searchbar extends Component {
         const querry = this.state.newQuerry.trim().toLowerCase();       
         
         if (querry === '') {
-            window.alert('Please, enter some querry')
+
+            toast('Please, enter some querry')
+            
             e.currentTarget.searchQuerry.value = ''
             return
         }
 
         if (querry === this.props.querry) {
-            window.alert('Please, try different querry')
+
+            toast('Please, try different querry')
+            
             return
         }
                 
