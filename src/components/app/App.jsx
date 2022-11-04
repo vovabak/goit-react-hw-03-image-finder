@@ -73,7 +73,7 @@ export class App extends Component {
       page: 0,
       gallery: [],
       toLoadMoreShow: true,
-    });
+    })
   }
 
   handleLoadMore = () => {
@@ -81,7 +81,7 @@ export class App extends Component {
       return {
         page: prevState.page += 1,        
       }
-    });
+    })
   }
 
   toggleModal = (id) => {    
