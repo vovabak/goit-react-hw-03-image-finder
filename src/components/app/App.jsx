@@ -23,7 +23,7 @@ export class App extends Component {
     error: null,
     toLoadMoreShow: false,
   }
-  
+ 
 
   async componentDidUpdate(_, prevState) {
 
@@ -37,7 +37,7 @@ export class App extends Component {
     }
 
     if (prevGallery === gallery && prevPage !== page) {      
-
+console.log(prevGallery, gallery, prevPage, page);
       this.setState({ status: 'pending', });
 
       try {
@@ -79,7 +79,7 @@ export class App extends Component {
   handleLoadMore = () => {
     this.setState(prevState => {
       return {
-        page: prevState.page += 1,        
+        page: prevState.page += 1,      
       }
     })
   }
