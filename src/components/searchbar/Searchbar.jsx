@@ -2,8 +2,8 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { Component } from 'react';
 import { toast } from 'react-toastify';
 import { IconContext } from "react-icons";
+import PropTypes from "prop-types";
 import { SearchbarHeader, Form, SearchFormButton, ButtonLabel, Input } from './Searchbar.styled';
-
 
 
 export class Searchbar extends Component {
@@ -37,10 +37,7 @@ export class Searchbar extends Component {
         }
                 
         this.props.onSubmit(querry)
-
-        this.setState({ newQuerry: '' })
         
-        e.currentTarget.reset()
     }
     render() {
         return (
@@ -69,3 +66,7 @@ export class Searchbar extends Component {
     }    
 }
 
+Searchbar.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    querry: PropTypes.string.isRequired,
+}

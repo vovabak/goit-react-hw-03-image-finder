@@ -1,4 +1,5 @@
 import { ThreeDots } from 'react-loader-spinner';
+import PropTypes from "prop-types";
 
 export const Loader = ({status}) => {
    return <span>
@@ -8,4 +9,8 @@ export const Loader = ({status}) => {
                visible={status === 'pending'}
             />
          </span >
+}
+
+Loader.propTypes = {
+   status: PropTypes.string.isRequired,
 }

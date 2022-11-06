@@ -19,9 +19,9 @@ export class App extends Component {
     querry: '',
     page: 1,    
     status: 'idle',
-    modalImage: null,    
     error: null,
-    toLoadMoreShow: false,
+    showModal: false,
+    showLoadMore: false,
   }
  
 
@@ -37,8 +37,8 @@ export class App extends Component {
     }
 
     if (prevGallery === gallery && prevPage !== page) {      
-console.log(prevGallery, gallery, prevPage, page);
-      this.setState({ status: 'pending', });
+
+      this.setState({ status: 'pending', })
 
       try {
         const response = await getImages(querry, page)       
@@ -49,12 +49,12 @@ console.log(prevGallery, gallery, prevPage, page);
 
         if (response.data.totalHits < response.config.params.per_page) {
           
-          this.setState({ toLoadMoreShow: false, status: 'resolved', });
+          this.setState({ showLoadMore: false, status: 'resolved', });
         }
 
         if (gallery.length > 0 && page > response.data.totalHits / response.config.params.per_page) {
           
-          this.setState({ toLoadMoreShow: false, status: 'resolved', });
+          this.setState({ showLoadMore: false, status: 'resolved', });
           toast("It seems You've just reached the end of the list");
         }
         
@@ -72,28 +72,29 @@ console.log(prevGallery, gallery, prevPage, page);
       querry,      
       page: 0,
       gallery: [],
-      toLoadMoreShow: true,
+      showLoadMore: true,
     })
   }
 
   handleLoadMore = () => {
     this.setState(prevState => {
       return {
-        page: prevState.page += 1,      
+        page: prevState.page + 1, 
       }
     })
   }
 
-  toggleModal = (id) => {    
+  toggleModal = (id) => {
+    
     this.setState({      
-      modalImage: id ?? null,
+      showModal: id? this.state.gallery.filter(galleryItem => galleryItem.id === id) : false,
     }) 
   }
 
   render() {
 
-    const { querry, gallery, status, toLoadMoreShow, modalImage } = this.state;
-        
+    const { querry, gallery, status, showLoadMore, showModal } = this.state;
+       
     return (
       <Container>
         <Searchbar
@@ -107,12 +108,12 @@ console.log(prevGallery, gallery, prevPage, page);
             <Loader status={status} />
           </ImageGallery>
         }
-        {status === 'resolved' && toLoadMoreShow &&
+        {status === 'resolved' && showLoadMore &&
           <Button            
             onLoadMore={this.handleLoadMore} />}        
-        {modalImage &&
+        {showModal &&
           <Modal
-            image={gallery.filter(galleryItem => galleryItem.id === modalImage)}            
+            image={showModal}       
             toggleModal={this.toggleModal} />}
         <ToastContainer
           limit={3}

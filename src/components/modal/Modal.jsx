@@ -1,14 +1,15 @@
 import { Component } from 'react';
+import PropTypes from "prop-types";
 import { Overlay, ModalWindow } from './Modal.styled';
 
 export class Modal extends Component {
 
     componentDidMount() {        
-        window.addEventListener('keydown', this.onClose)
+        document.addEventListener('keydown', this.onClose)
     }
 
     componentWillUnmount() {        
-        window.removeEventListener('keydown', this.onClose)
+        document.removeEventListener('keydown', this.onClose)
     }
 
     onClose = (e) => {
@@ -24,8 +25,7 @@ export class Modal extends Component {
         this.props.toggleModal()
     }
 
-    render() {
-        
+    render() {        
         return (
             <Overlay onClick={this.onClick}>
             <ModalWindow>
@@ -34,4 +34,12 @@ export class Modal extends Component {
         </Overlay>
     )
     }    
+}
+
+Modal.propTypes = {
+    image: PropTypes.arrayOf(PropTypes.shape({
+        largeImageURL: PropTypes.string.isRequired,
+        tags: PropTypes.string.isRequired,
+    })).isRequired,
+    toggleModal: PropTypes.func.isRequired,
 }
